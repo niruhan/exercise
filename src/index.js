@@ -5,6 +5,9 @@ const fs = require('fs');
 
 // YOUR CODE HERE
 
+// Since file i/o operations are heavy I decided to build a string with the answer 
+// for each task and then write to file at the end
+
 // Task 1
 var task1result = 'Task 1\n\n';
 for (i = 1; i <= 100; i++) {
@@ -43,6 +46,7 @@ fs.appendFile("./result.txt", task2result, function(err) {
 
 // Task 3
 // Task 1 with async
+// Check the section 'Optimization for async' for optimized solution
 var task3_1result = '\n\nTask 3\nTask 1 with async\n\n';
 for (let i = 1, p = Promise.resolve(); i <= 101; i++) {
   if (i === 101) {
