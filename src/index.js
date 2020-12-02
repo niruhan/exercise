@@ -6,127 +6,172 @@ const fs = require('fs');
 // YOUR CODE HERE
 
 // Task 1
-// var task1result = 'Task 1\n\n';
-// for (i = 1; i <= 100; i++) {
-//   task1result += i + ": " + getRandomWordSync() + "\n";
-//   }
+var task1result = 'Task 1\n\n';
+for (i = 1; i <= 100; i++) {
+  task1result += i + ": " + getRandomWordSync() + "\n";
+  }
 
-// fs.writeFile("./result.txt", task1result, function(err) {
-//   if(err) {
-//       return console.log(err);
-//   }
-//   console.log("The file was saved!");
-// }); 
+fs.writeFile("./result.txt", task1result, function(err) {
+  if(err) {
+      return console.log(err);
+  }
+  console.log("Task 1 was saved!");
+}); 
 
 // Task 2
-// var task2result = '\n\nTask 2\n\n';
-// for (i = 1; i <= 100; i++) {
-//     if (i % 3 === 0) {
-//         if (i % 5 === 0) {
-//             task2result += i + ": " + "FizzBuzz\n";
-//         } else {
-//             task2result += i + ": " + "Fizz\n";
-//         }
-//     } else if (i % 5 === 0) {
-//         task2result += i + ": " + "Buzz\n";
-//     } else {
-//         task2result += i + ": " + getRandomWordSync() + "\n";
-//     }
-//   }
+var task2result = '\n\nTask 2\n\n';
+for (i = 1; i <= 100; i++) {
+    if (i % 3 === 0) {
+        if (i % 5 === 0) {
+            task2result += i + ": " + "FizzBuzz\n";
+        } else {
+            task2result += i + ": " + "Fizz\n";
+        }
+    } else if (i % 5 === 0) {
+        task2result += i + ": " + "Buzz\n";
+    } else {
+        task2result += i + ": " + getRandomWordSync() + "\n";
+    }
+  }
 
-// fs.appendFile("./result.txt", task2result, function(err) {
-//   if(err) {
-//       return console.log(err);
-//   }
-//   console.log("The file was saved!");
-// }); 
+fs.appendFile("./result.txt", task2result, function(err) {
+  if(err) {
+      return console.log(err);
+  }
+  console.log("Task 2 was saved!");
+}); 
 
 // Task 3
 // Task 1 with async
-var task3result = '\n\nTask 3\nTask 1 with async\n\n';
+var task3_1result = '\n\nTask 3\nTask 1 with async\n\n';
 for (let i = 1, p = Promise.resolve(); i <= 101; i++) {
   if (i === 101) {
-    // console.log(task3result);
+    p = p.then(_ => {
+      fs.appendFile("./result.txt", task3_1result, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("Task 3 - 1 was saved!");
+      }); 
+    });
   } else {
-    p = p.then(_ => getRandomWord().then(word => {task3result+=  i + ": " + word}));
+    p = p.then(_ => getRandomWord().then(word => {task3_1result +=  i + ": " + word + "\n"}));
   }
 }
 
 // Task 2 with async
-// for (let i = 1, p = Promise.resolve(); i <= 100; i++) {
-//   p = p.then(_ => getRandomWord().then(word => {
-//     if (i % 3 === 0) {
-//       if (i % 5 === 0) {
-//         console.log(i + ": " + "FizzBuzz");
-//       } else {
-//         console.log(i + ": " + "Fizz");
-//       }
-//     } else if (i % 5 === 0) {
-//       console.log(i + ": " + "Buzz");
-//     } else {
-//       console.log(i + ": " + word)
-//     }
-//   }));
-// }
+var task3_2result = '\n\nTask 3\nTask 2 with async\n\n';
+for (let i = 1, p = Promise.resolve(); i <= 101; i++) {
+  if (i === 101) {
+    // p = p.then(_ => console.log(task3_2result));
+    p = p.then(_ => {
+        fs.appendFile("./result.txt", task3_2result, function(err) {
+          if(err) {
+              return console.log(err);
+          }
+          console.log("Task 3 - 1 was saved!");
+        }); 
+      });
+  } else if (i % 3 === 0) {
+    if (i % 5 === 0) {
+      p = p.then(_ => task3_2result += i + ": " + "FizzBuzz\n");
+    } else {
+      p = p.then(_ => task3_2result += i + ": " + "Fizz\n");
+    }
+  } else if (i % 5 === 0) {
+    p = p.then(_ => task3_2result += i + ": " + "Buzz\n");
+  } else {
+    p = p.then(_ => getRandomWord().then(word => {
+      task3_2result += i + ": " + word + "\n";
+    }
+  ));}
+}
 
 // Task 4
 // Error handling for synchronous function
-// for (i = 1; i <= 100; i++) {
-//   try {
-//     if (i % 3 === 0) {
-//       if (i % 5 === 0) {
-//         console.log(i + ": " + "FizzBuzz");
-//       } else {
-//         console.log(i + ": " + "Fizz");
-//       }
-//     } else if (i % 5 === 0) {
-//       console.log(i + ": " + "Buzz");
-//     } else {
-//       console.log(i + ": " + getRandomWordSync({withErrors: true}));
-//     }
-//   } catch (_) {
-//     console.log(i + ": It shouldn't break anything!");
-//   }
-// }
+var task4_1result = '\n\nTask 4\nError handling for synchronous function\n\n';
+for (i = 1; i <= 100; i++) {
+  try {
+    if (i % 3 === 0) {
+      if (i % 5 === 0) {
+        task4_1result += i + ": " + "FizzBuzz\n";
+      } else {
+        task4_1result += i + ": " + "Fizz\n";
+      }
+    } else if (i % 5 === 0) {
+      task4_1result += i + ": " + "Buzz\n";
+    } else {
+      task4_1result += i + ": " + getRandomWordSync({withErrors: true}) + "\n";
+    }
+  } catch (_) {
+    task4_1result += i + ": It shouldn't break anything!\n";
+  }
+}
+
+fs.appendFile("./result.txt", task4_1result, function(err) {
+  if(err) {
+      return console.log(err);
+  }
+  console.log("Task 4 - 1 was saved!");
+});
 
 // Error handling for asynchronous function
-// for (let i = 1, p = Promise.resolve(); i <= 100; i++) {
-//   p = p.then(_ => getRandomWord({ withErrors: true}).then(word => {
-//     if (i % 3 === 0) {
-//       if (i % 5 === 0) {
-//         console.log(i + ": " + "FizzBuzz");
-//       } else {
-//         console.log(i + ": " + "Fizz");
-//       }
-//     } else if (i % 5 === 0) {
-//       console.log(i + ": " + "Buzz");
-//     } else {
-//       console.log(i + ": " + word)
-//     }
-//   }).catch(_ => console.log(i + ": It shouldn't break anything!")));
-// }
+var task4_2result = '\n\nTask 4\nError handling for asynchronous function\n\n';
+
+for (let i = 1, p = Promise.resolve(); i <= 101; i++) {
+  if (i === 101) {
+    p = p.then(_ => {
+        fs.appendFile("./result.txt", task4_2result, function(err) {
+          if(err) {
+              return console.log(err);
+          }
+          console.log("Task 3 - 1 was saved!");
+        }); 
+      });
+} else if (i % 3 === 0) {
+    if (i % 5 === 0) {
+      p = p.then(_ => task4_2result += i + ": " + "FizzBuzz\n");
+    } else {
+      p = p.then(_ => task4_2result += i + ": " + "Fizz\n");
+    }
+  } else if (i % 5 === 0) {
+    p = p.then(_ => task4_2result += i + ": " + "Buzz\n");
+  } else {
+    p = p.then(_ => getRandomWord({ withErrors: true}).then(word => {
+      task4_2result += i + ": " + word + "\n";
+    }
+  ).catch(_ => task4_2result += i + ": It shouldn't break anything!\n"));}
+}
 
 // Optimization for async
-// var words = [];
-// for (i = 1; i <= 100; i++) {
-//   words.push(getRandomWordSync({slow: true}));
-// }
+var words = [];
+for (i = 1; i <= 100; i++) {
+  words.push(getRandomWordSync({slow: true}));
+}
 
-// n = 1;
-
-// while (n <= 100) {
-//   if (n % 3 === 0) {
-//       if (n % 5 === 0) {
-//           console.log(n + ": " + "FizzBuzz");
-//       } else {
-//           console.log(n + ": " + "Fizz");
-//       }
-//       n = n + 1;
-//   } else if (n % 5 === 0) {
-//       console.log(n + ": " + "Buzz");
-//       n = n + 1;
-//   } else if (words.length > 0) {
-//     console.log(n + ": " + words.shift());
-//     n = n + 1;
-//   }
-// }
+n = 1;
+var optimizationResult = '\n\nOptimization with async results\n\n';
+while (n <= 101) {
+  if (n === 101) {
+    fs.appendFile("./result.txt", optimizationResult, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("Task 3 - 1 was saved!");
+      }); 
+    n = n + 1;
+  } else if (n % 3 === 0) {
+      if (n % 5 === 0) {
+          optimizationResult += n + ": " + "FizzBuzz\n";
+      } else {
+          optimizationResult += n + ": " + "Fizz\n";
+      }
+      n = n + 1;
+  } else if (n % 5 === 0) {
+      optimizationResult += n + ": " + "Buzz\n";
+      n = n + 1;
+  } else if (words.length > 0) {
+    optimizationResult += n + ": " + words.shift() + "\n";
+    n = n + 1;
+  }
+}
